@@ -1,0 +1,39 @@
+
+================DATA TYPES================
+
+string
+int
+long
+?float?
+char
+pointer*
+
+
+================OPERATORS================
+
+Assignment: = += -= *= /= %=
+logical: ||  &&
+bitwise: | ^ & >> <<
+relational: == != <   <= >= >
+arithmetic: +- * / %
+unary ++ -- ! ~
+bounds: ()[]
+
+
+
+================DATA STRUCTURES================
+array
+class
+
+================CONTROL STRUCTURES================
+if
+else if
+else
+?switch?break?default
+
+while
+for
+
+================OTHER================
+new, delete
+functions

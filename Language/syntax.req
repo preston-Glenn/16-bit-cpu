@@ -1,0 +1,8 @@
+{required}
+
+================VARIABLES================
+
+variable_name: [a-zA-z][a-zA-z_]*;
+
+initialise and assignment: {data_type} {variable_name} = {data_type_value};
+normal assignemnt: {variable_name} = {operand}

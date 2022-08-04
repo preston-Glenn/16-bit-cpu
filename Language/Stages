@@ -1,0 +1,20 @@
+
+
+1. We will first spec out the requirements of the OS and its use case.
+    a) May take future steps into account to design for upgradability.
+
+2. Spec out requirements for programming language from OS reqs.
+
+3. Write lexical analyser and parser to understand language.
+
+4. Define an assembly language (ISA) that can support the language.
+
+5. Build compiler that uses lexical analyser and parser to convert programming language to assembly
+
+6. Design CPU to support ISA
+
+7. Implement Assembler
+
+8. Run some programs on it 
+
+9. Implement OS
