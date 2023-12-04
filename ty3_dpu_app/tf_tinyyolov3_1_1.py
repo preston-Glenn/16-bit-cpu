@@ -415,6 +415,7 @@ def calculate_iou1(box1, box2):
         # Treat box2 as a single bounding box
         box2 = box2.reshape(1, -1)
 
+    print("box2len: ", len(box2))
     if len(box2) == 3:
         x2, y2, d2 = box2
         w2, h2 = d2, d2
