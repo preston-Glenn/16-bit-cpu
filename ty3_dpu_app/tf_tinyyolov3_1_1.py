@@ -415,13 +415,13 @@ def calculate_iou1(box1, box2):
         # Treat box2 as a single bounding box
         box2 = box2.reshape(1, -1)
 
-    if len(row) == 3:
-        x2, y2, d2 = row
+    if len(box2) == 3:
+        x2, y2, d2 = box2
         w2, h2 = d2, d2
         box2 = [x2, y2, w2, h2]
 
-    elif len(row) == 4:
-        x2, y2, w2, h2 = row
+    elif len(box2) == 4:
+        x2, y2, w2, h2 = box2
     else:
         raise ValueError("Invalid number of values for box2")
 
