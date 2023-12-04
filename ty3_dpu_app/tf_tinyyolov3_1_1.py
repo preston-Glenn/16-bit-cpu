@@ -400,13 +400,41 @@ def box_union(box1, box2):
 
 
 def calculate_iou1(box1, box2):
-    I = box_intersection(box1,box2)
-    U = box_union(box1,box2)
-    if I == 0 or U == 0:
-        return 0
-    else:
-        return I/U
 
+    if len(box1) == 3:
+        # Assume box1 is (x, y, diagonal)
+        x1, y1, d1 = box1
+        w1, h1 = d1, d1
+        box1 = [x1, y1, w1, h1]
+    elif len(box1) == 4:
+        x1, y1, w1, h1 = box1
+    else:
+        raise ValueError("Invalid number of values for box1")
+
+    if len(box2.shape) == 1:
+        # Treat box2 as a single bounding box
+        box2 = box2.reshape(1, -1)
+
+    iou_values = []
+    for row in box2:
+        if len(row) == 3:
+            x2, y2, d2 = row
+            w2, h2 = d2, d2
+            box2 = [x2, y2, w2, h2]
+
+        elif len(row) == 4:
+            x2, y2, w2, h2 = row
+        else:
+            raise ValueError("Invalid number of values for box2")
+
+
+        I = box_intersection(box1,box2)
+        U = box_union(box1,box2)
+        if I == 0 or U == 0:
+            iou_values.append(0)
+        else:
+            iou_values.append(I/U)
+    return iou_values
 
 def calculate_iou(box1, box2):
     # Calculate IoU between two bounding boxes
@@ -418,6 +446,7 @@ def calculate_iou(box1, box2):
         # Assume box1 is (x, y, diagonal)
         x1, y1, d1 = box1
         w1, h1 = d1, d1
+        box1 = [x1, y1, w1, h1]
     elif len(box1) == 4:
         x1, y1, w1, h1 = box1
     else:
@@ -429,10 +458,12 @@ def calculate_iou(box1, box2):
 
     iou_values = []
 
+    print("box2len: ", len(box2))
     for row in box2:
         if len(row) == 3:
             x2, y2, d2 = row
             w2, h2 = d2, d2
+
         elif len(row) == 4:
             x2, y2, w2, h2 = row
         else:
