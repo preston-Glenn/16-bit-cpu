@@ -286,10 +286,10 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
     all_true_labels = np.array(all_true_labels, dtype=float)
 
     # print labels
-    print("Predicted labels:")
-    print(all_pred_labels)
-    print("True labels:")
-    print(all_true_labels)
+    # print("Predicted labels:")
+    # print(all_pred_labels)
+    # print("True labels:")
+    # print(all_true_labels)
 
     num_classes = int(max(np.max(all_true_labels[:, 0]), np.max(all_pred_labels[:, 0]))) + 1
 
@@ -299,12 +299,12 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
         pred_class_labels = all_pred_labels[all_pred_labels[:, 0] == class_idx]
 
         if len(true_class_labels) == 0:
-            print("skipped class: %d" % class_idx)
+            # print("skipped class: %d" % class_idx)
             continue # Skip the class if there are no true labels
 
         if len(pred_class_labels) == 0:
             mAP_scores.append(0.0) # Assign zero AP if there are no predictions
-            print("No predictions for class: %d" % class_idx)
+            # print("No predictions for class: %d" % class_idx)
             continue
 
         # Sort the predicted bounding boxes by their confidence scores in descending order
@@ -331,11 +331,11 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
             # Loop over the true bounding boxes
             for i, true_label in enumerate(true_class_labels):
                 # Calculate the IoU with the current true bounding box
-                iou_value = calculate_iou(pred_label[2:], true_label[1:])
-                iou_new = calculate_iou1(pred_label[2:], true_label[1:])
+                iou_value = calculate_iou(pred_label[1:], true_label[1:])
+                iou_new = calculate_iou1(pred_label[1:], true_label[1:])
                 
-                print(iou_value, "versus", iou_new)
-                iou_value = max(iou_value, iou_new)
+                # print(iou_value, "versus", iou_new)
+                # iou_value = max(iou_value, iou_new)
 
 
                 # Check if the IoU is higher than the current max IoU
@@ -343,10 +343,10 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
                     max_iou = iou_value # Update the max IoU value
                     max_iou_idx = i # Update the true label index
                     max_label = true_label
-            print("pred_label: ", pred_label)
-            print("max_iou: ", max_iou)
-            print("max_iou_idx: ", max_iou_idx)
-            print("max_label: ", max_label)
+            # print("pred_label: ", pred_label)
+            # print("max_iou: ", max_iou)
+            # print("max_iou_idx: ", max_iou_idx)
+            # print("max_label: ", max_label)
 
             # Check if the max IoU is above the threshold
             if max_iou >= iou_threshold:
