@@ -326,19 +326,27 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
             max_iou = 0.0
             max_iou_idx = -1
 
+            max_label = true_class_labels[0]
+
             # Loop over the true bounding boxes
             for i, true_label in enumerate(true_class_labels):
                 # Calculate the IoU with the current true bounding box
                 iou_value = calculate_iou(pred_label[2:], true_label[1:])
                 iou_new = calculate_iou1(pred_label[2:], true_label[1:])
+                
                 print(iou_value, "versus", iou_new)
-                print(pred_label, true_class_labels[max_iou_idx])
+                iou_value = max(iou_value, iou_new)
 
 
                 # Check if the IoU is higher than the current max IoU
                 if iou_value > max_iou:
                     max_iou = iou_value # Update the max IoU value
                     max_iou_idx = i # Update the true label index
+                    max_label = true_label
+            print("pred_label: ", pred_label)
+            print("max_iou: ", max_iou)
+            print("max_iou_idx: ", max_iou_idx)
+            print("max_label: ", max_label)
 
             # Check if the max IoU is above the threshold
             if max_iou >= iou_threshold:
