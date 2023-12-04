@@ -330,6 +330,9 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
             for i, true_label in enumerate(true_class_labels):
                 # Calculate the IoU with the current true bounding box
                 iou_value = calculate_iou(pred_label[2:], true_label[1:])
+                print(iou_value)
+                print(pred_label, true_class_labels[max_iou_idx])
+
 
                 # Check if the IoU is higher than the current max IoU
                 if iou_value > max_iou:
@@ -342,12 +345,12 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
                 fn -= 1 # Decrement the false negative counter
 
                 # print prediction that matches a ground truth label
-                print(pred_label, true_class_labels[max_iou_idx])
 
                 # Remove the matched true label from the list to avoid double counting
                 true_class_labels = np.delete(true_class_labels, max_iou_idx, axis=0)
             else:
                 fp += 1 # Increment the false positive counter
+
 
             # Calculate the precision and recall for the current prediction
             p = tp / (tp + fp)
