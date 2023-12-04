@@ -415,26 +415,23 @@ def calculate_iou1(box1, box2):
         # Treat box2 as a single bounding box
         box2 = box2.reshape(1, -1)
 
-    iou_values = []
-    for row in box2:
-        if len(row) == 3:
-            x2, y2, d2 = row
-            w2, h2 = d2, d2
-            box2 = [x2, y2, w2, h2]
+    if len(row) == 3:
+        x2, y2, d2 = row
+        w2, h2 = d2, d2
+        box2 = [x2, y2, w2, h2]
 
-        elif len(row) == 4:
-            x2, y2, w2, h2 = row
-        else:
-            raise ValueError("Invalid number of values for box2")
+    elif len(row) == 4:
+        x2, y2, w2, h2 = row
+    else:
+        raise ValueError("Invalid number of values for box2")
 
 
-        I = box_intersection(box1,box2)
-        U = box_union(box1,box2)
-        if I == 0 or U == 0:
-            iou_values.append(0)
-        else:
-            iou_values.append(I/U)
-    return iou_values
+    I = box_intersection(box1,box2)
+    U = box_union(box1,box2)
+    if I == 0 or U == 0:
+        return 0
+    else:
+        return (I/U)
 
 def calculate_iou(box1, box2):
     # Calculate IoU between two bounding boxes
