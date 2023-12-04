@@ -285,6 +285,12 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
     all_pred_labels = np.array(all_pred_labels, dtype=float)
     all_true_labels = np.array(all_true_labels, dtype=float)
 
+    # print labels
+    print("Predicted labels:")
+    print(all_pred_labels)
+    print("True labels:")
+    print(all_true_labels)
+
     num_classes = int(max(np.max(all_true_labels[:, 0]), np.max(all_pred_labels[:, 0]))) + 1
 
     mAP_scores = []
