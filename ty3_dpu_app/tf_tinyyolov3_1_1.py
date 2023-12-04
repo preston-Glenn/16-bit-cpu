@@ -342,6 +342,9 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
             p = tp / (tp + fp)
             r = tp / (tp + fn)
 
+            # print tp, fp, fn, p, r
+            print("tp: %d, fp: %d, fn: %d, p: %f, r: %f" % (tp, fp, fn, p, r))
+
             # Append the values to the lists
             precision.append(p)
             recall.append(r)
@@ -350,7 +353,7 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
         interpolated_precision = np.maximum.accumulate(precision[::-1])[::-1]
 
         # Calculate the average precision by summing the product of precision and recall differences
-        average_precision = np.sum(interpolated_precision * np.diff(recall, prepend=0))
+        average_precision = np.sum(interpolated_precision * np.diff(np.concatenate(([0],recall))))
 
         # Append the average precision to the mAP scores list
         mAP_scores.append(average_precision)
@@ -362,8 +365,7 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
 
 def calculate_iou(box1, box2):
     # Calculate IoU between two bounding boxes
-    print("box1:", box1)
-    print("box2:", box2)
+
 
     if len(box1) == 3:
         # Assume box1 is (x, y, diagonal)
