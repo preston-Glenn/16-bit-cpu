@@ -330,7 +330,8 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
             for i, true_label in enumerate(true_class_labels):
                 # Calculate the IoU with the current true bounding box
                 iou_value = calculate_iou(pred_label[2:], true_label[1:])
-                print(iou_value)
+                iou_new = calculate_iou1(pred_label[2:], true_label[1:])
+                print(iou_value, "versus", iou_new)
                 print(pred_label, true_class_labels[max_iou_idx])
 
 
@@ -376,9 +377,41 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
     mean_AP = np.mean(mAP_scores)
     return mean_AP
 
+def overlap(x1, w1, x2, w2):
+    l1 = x1 - w1/2
+    l2 = x2 - w2/2
+    left = max(l1, l2)
+    r1 = x1 + w1/2
+    r2 = x2 + w2/2
+    right = min(r1, r2)
+    return right - left
+
+def box_intersection(box1, box2):
+    w = overlap(box1[0], box1[2], box2[0], box2[2])
+    h = overlap(box1[1], box1[3], box2[1], box2[3])
+    if w < 0 or h < 0: return 0
+    area = w*h
+    return area
+
+def box_union(box1, box2):
+    i = box_intersection(box1, box2)
+    u = box1[2]*box1[3] + box2[2]*box2[3] - i
+    return u
+
+
+def calculate_iou1(box1, box2):
+    I = box_intersection(box1,box2)
+    U = box_union(box1,box2)
+    if I == 0 or U == 0:
+        return 0
+    else:
+        return I/U
+
 
 def calculate_iou(box1, box2):
     # Calculate IoU between two bounding boxes
+    print("box1: ", box1)
+    print("box2: ", box2)
 
 
     if len(box1) == 3:
