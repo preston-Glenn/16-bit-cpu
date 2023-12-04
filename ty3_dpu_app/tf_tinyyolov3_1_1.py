@@ -424,7 +424,6 @@ def calculate_iou1(box1, box2):
         box2 = box2.reshape(1, -1)
         box2 = box2[0]
 
-    print("box2len: ", len(box2))
 
     if len(box2) == 3:
         x2, y2, d2 = box2
@@ -446,8 +445,6 @@ def calculate_iou1(box1, box2):
 
 def calculate_iou(box1, box2):
     # Calculate IoU between two bounding boxes
-    print("box1: ", box1)
-    print("box2: ", box2)
 
 
     if len(box1) == 3:
@@ -466,7 +463,6 @@ def calculate_iou(box1, box2):
 
     iou_values = []
 
-    print("box2len: ", len(box2))
     for row in box2:
         if len(row) == 3:
             x2, y2, d2 = row
