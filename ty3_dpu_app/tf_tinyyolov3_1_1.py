@@ -299,10 +299,12 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
         pred_class_labels = all_pred_labels[all_pred_labels[:, 0] == class_idx]
 
         if len(true_class_labels) == 0:
+            print("skipped class: %d" % class_idx)
             continue # Skip the class if there are no true labels
 
         if len(pred_class_labels) == 0:
             mAP_scores.append(0.0) # Assign zero AP if there are no predictions
+            print("No predictions for class: %d" % class_idx)
             continue
 
         # Sort the predicted bounding boxes by their confidence scores in descending order
@@ -338,6 +340,9 @@ def compute_mAP_all_images(input_images, pred_labels_dir, golden_labels_dir, iou
             if max_iou >= iou_threshold:
                 tp += 1 # Increment the true positive counter
                 fn -= 1 # Decrement the false negative counter
+
+                # print prediction that matches a ground truth label
+                print(pred_label, true_class_labels[max_iou_idx])
 
                 # Remove the matched true label from the list to avoid double counting
                 true_class_labels = np.delete(true_class_labels, max_iou_idx, axis=0)
